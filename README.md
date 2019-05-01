@@ -4,7 +4,7 @@ This is a companion app I built for the Avalon board game. It is used to keep tr
 
 ## How to Install
 
-To install the app, simply download the [AvalonCompanionApp.apk](apk) onto the mobile device and tap to install.
+To install the app, simply download the [apk](AvalonCompanionApp.apk) onto the mobile device and tap to install.
 
 To recompile from source, download Android Studio and open the project. Then, follow Android's Studio instructions to compile and build to an apk.
 
