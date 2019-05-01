@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">AvalonCompanionApp</string>
+    <string name="title_activity_character_select">CharacterSelect</string>
+    <string name="title_activity_game">Game</string>
+    <string name="tts_stop">Stop</string>
+
+    <string name="main_menu.title">Avalon</string>
+    <string name="main_menu.start">New Game</string>
+
+    <string name="character_select.good_team">Minions of Merlin</string>
+    <string name="character_select.merlin">Merlin</string>
+    <string name="character_select.percival">Percival</string>
+    <string name="character_select.evil_team">Minions of Mordred</string>
+    <string name="character_select.assassin">Assassin</string>
+    <string name="character_select.morgana">Morgana</string>
+    <string name="character_select.mordred">Mordred</string>
+    <string name="character_select.oberon">Oberon</string>
+    <string name="character_select.night_phase_bot">Night\n(Bot)</string>
+    <string name="character_select.night_phase_human">Night\n(Human)</string>
+    <string name="character_select.start">Start</string>
+
+</resources>

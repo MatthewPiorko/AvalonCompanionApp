@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/avalon"
+    tools:context=".CharacterSelect">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".CharacterSelect"
+        tools:showIn="@layout/activity_character_select">
+
+        <RadioGroup
+            android:id="@+id/num_players"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:checkedButton="@id/num_players_10"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.1">
+
+            <ToggleButton
+                android:id="@+id/num_players_5"
+                android:layout_width="45dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="0dp"
+                android:onClick="onToggle"
+                android:textOff="5"
+                android:textOn="5" />
+
+            <ToggleButton
+                android:id="@+id/num_players_6"
+                android:layout_width="45dp"
+                android:layout_height="wrap_content"
+                android:onClick="onToggle"
+                android:textOff="6"
+                android:textOn="6" />
+
+            <ToggleButton
+                android:id="@+id/num_players_7"
+                android:layout_width="45dp"
+                android:layout_height="wrap_content"
+                android:onClick="onToggle"
+                android:textOff="7"
+                android:textOn="7" />
+
+            <ToggleButton
+                android:id="@+id/num_players_8"
+                android:layout_width="45dp"
+                android:layout_height="wrap_content"
+                android:onClick="onToggle"
+                android:textOff="8"
+                android:textOn="8" />
+
+            <ToggleButton
+                android:id="@+id/num_players_9"
+                android:layout_width="45dp"
+                android:layout_height="wrap_content"
+                android:onClick="onToggle"
+                android:textOff="9"
+                android:textOn="9" />
+
+            <ToggleButton
+                android:id="@+id/num_players_10"
+                android:layout_width="45dp"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:onClick="onToggle"
+                android:textOff="10"
+                android:textOn="10" />
+        </RadioGroup>
+
+        <android.widget.ToggleButton
+            android:id="@+id/merlin"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/good_character_toggle"
+            android:checked="true"
+            android:textAllCaps="false"
+            android:textColor="@color/grey_text"
+            android:textOff="@string/character_select.merlin"
+            android:textOn="@string/character_select.merlin"
+            android:textSize="@dimen/standard_text_size"
+            android:padding="@dimen/standard_padding"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.25"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.3" />
+
+        <android.widget.ToggleButton
+            android:id="@+id/percival"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/good_character_toggle"
+            android:checked="true"
+            android:textAllCaps="false"
+            android:textColor="@color/grey_text"
+            android:textOff="@string/character_select.percival"
+            android:textOn="@string/character_select.percival"
+            android:textSize="@dimen/standard_text_size"
+            android:padding="@dimen/standard_padding"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.25"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.5" />
+
+        <android.widget.ToggleButton
+            android:id="@+id/assassin"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/evil_character_toggle"
+            android:checked="true"
+            android:textAllCaps="false"
+            android:textColor="@color/grey_text"
+            android:textOff="@string/character_select.assassin"
+            android:textOn="@string/character_select.assassin"
+            android:textSize="@dimen/standard_text_size"
+            android:padding="@dimen/standard_padding"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.615"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.3" />
+
+        <android.widget.ToggleButton
+            android:id="@+id/morgana"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/evil_character_toggle"
+            android:checked="true"
+            android:textAllCaps="false"
+            android:textColor="@color/grey_text"
+            android:textOff="@string/character_select.morgana"
+            android:textOn="@string/character_select.morgana"
+            android:textSize="@dimen/standard_text_size"
+            android:padding="@dimen/standard_padding"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.885"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.3" />
+
+        <android.widget.ToggleButton
+            android:id="@+id/mordred"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/evil_character_toggle"
+            android:checked="false"
+            android:textAllCaps="false"
+            android:textColor="@color/grey_text"
+            android:textOff="@string/character_select.mordred"
+            android:textOn="@string/character_select.mordred"
+            android:textSize="@dimen/standard_text_size"
+            android:padding="@dimen/standard_padding"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.615"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.5" />
+
+        <android.widget.ToggleButton
+            android:id="@+id/oberon"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/evil_character_toggle"
+            android:checked="false"
+            android:textAllCaps="false"
+            android:textColor="@color/grey_text"
+            android:textOff="@string/character_select.oberon"
+            android:textOn="@string/character_select.oberon"
+            android:textSize="@dimen/standard_text_size"
+            android:padding="@dimen/standard_padding"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.885"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.5" />
+
+        <android.widget.Button
+            android:id="@+id/night_phase_bot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_button"
+            android:text="@string/character_select.night_phase_bot"
+            android:textAllCaps="false"
+            android:textSize="@dimen/standard_text_size"
+            android:padding="@dimen/standard_padding"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.75"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.85" />
+
+        <android.widget.Button
+            android:id="@+id/night_phase_human"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_button"
+            android:text="@string/character_select.night_phase_human"
+            android:textAllCaps="false"
+            android:textSize="@dimen/standard_text_size"
+            android:padding="@dimen/standard_padding"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.25"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.85" />
+
+        <android.widget.Button
+            android:id="@+id/start_game"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_button"
+            android:text="@string/character_select.start"
+            android:textAllCaps="false"
+            android:textSize="@dimen/standard_text_size"
+            android:padding="@dimen/standard_padding"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.95" />
+
+    </android.support.constraint.ConstraintLayout>
+</android.support.design.widget.CoordinatorLayout>
