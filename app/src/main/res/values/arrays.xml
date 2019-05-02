@@ -1,0 +1,25 @@
+<resources>
+    <string-array name="voice_entries">
+        <item>@string/settings.voice_robot</item>
+        <item>@string/settings.voice_human</item>
+    </string-array>
+
+    <string-array name="voice_values">
+        <item>@string/settings.voice_robot_id</item>
+        <item>@string/settings.voice_human_id</item>
+    </string-array>
+
+    <string-array name="timer_entries">
+        <item>@string/settings.timer_full</item>
+        <item>@string/settings.timer_half</item>
+        <item>@string/settings.timers_minus_one</item>
+        <item>@string/settings.timers_ten_second</item>
+    </string-array>
+
+    <string-array name="timer_values">
+        <item>@string/settings.timer_full_id</item>
+        <item>@string/settings.timer_half_id</item>
+        <item>@string/settings.timers_minus_one_id</item>
+        <item>@string/settings.timers_ten_second_id</item>
+    </string-array>
+</resources>

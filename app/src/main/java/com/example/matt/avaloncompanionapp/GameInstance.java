@@ -1,7 +1,12 @@
 package com.example.matt.avaloncompanionapp;
 
+import android.content.SharedPreferences;
+import android.content.res.Resources;
+import android.util.Log;
+
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class GameInstance implements Serializable {
@@ -25,9 +30,12 @@ public class GameInstance implements Serializable {
     private final int numNeutralEvil;
 
     private final int[] playersPerMission;
+    private final long[] timePerMission;
     private final boolean fourthRoundTwoFails;
 
-    public GameInstance(int numPlayers, Boolean merlin, Boolean percival, Boolean assassin, Boolean morgana, Boolean mordred, Boolean oberon) {
+    public GameInstance(Resources resources, int numPlayers, Boolean merlin, Boolean percival,
+                        Boolean assassin, Boolean morgana, Boolean mordred, Boolean oberon,
+                        String timerId) {
         this.numPlayers = numPlayers;
         this.gameState = GameState.DELIBERATION;
 
@@ -46,6 +54,20 @@ public class GameInstance implements Serializable {
         this.numNeutralEvil = this.numEvil - boolToInt(assassin) - boolToInt(morgana) - boolToInt(mordred) - boolToInt(oberon);
         this.playersPerMission = gameSetup.playersPerMission;
         this.fourthRoundTwoFails = numPlayers > 6;
+
+        if (timerId.equals(resources.getString(R.string.settings_timer_full_id))) {
+            this.timePerMission = Arrays.stream(playersPerMission).asLongStream().map(i -> i * GameConstants.MILLIS_IN_MINUTE).toArray();
+        } else if (timerId.equals(resources.getString(R.string.settings_timer_half_id))) {
+            this.timePerMission = Arrays.stream(playersPerMission).asLongStream().map(i -> i * GameConstants.MILLIS_IN_MINUTE / 2).toArray();
+        } else if (timerId.equals(resources.getString(R.string.settings_timers_minus_one_id))) {
+            long oneMinute = GameConstants.MILLIS_IN_MINUTE;
+            this.timePerMission = Arrays.stream(playersPerMission).asLongStream().map(i -> i * GameConstants.MILLIS_IN_MINUTE - oneMinute).toArray();
+        } else if (timerId.equals(resources.getString(R.string.settings_timers_ten_second_id))) {
+            this.timePerMission = Arrays.stream(playersPerMission).asLongStream().map(i -> GameConstants.MILLIS_IN_SECOND * 10).toArray();
+        } else {
+            Log.e("error", "unknown timer id");
+            this.timePerMission = null;
+        }
     }
 
     private int boolToInt(Boolean b) {
@@ -104,6 +126,10 @@ public class GameInstance implements Serializable {
         return playersPerMission;
     }
 
+    public long[] getTimePerMission() {
+        return timePerMission;
+    }
+
     public void setGameState(GameState gameState) {
         this.gameState = gameState;
     }
@@ -120,11 +146,11 @@ public class GameInstance implements Serializable {
         this.gameState = GameState.DELIBERATION;
     }
 
-    public List<TTSSegment> createNightPhaseSpeech() {
+    public List<TTSSegment> createNightPhaseSpeech(long longPauseDuration, long shortPauseDuration) {
         List<TTSSegment> segments = new ArrayList<>();
 
         segments.add(new TTSSegment("Everybody, close your eyes and put your fist out. "));
-        segments.add(new TTSSegment(GameConstants.SPEECH_LONG_PAUSE));
+        segments.add(new TTSSegment(longPauseDuration));
 
         List<String> evils = new ArrayList<>();
         if (assassin) evils.add("Assassin");
@@ -145,14 +171,14 @@ public class GameInstance implements Serializable {
                 ". If you do not, slam the table."
         };
         segments.add(new TTSSegment(String.join("", evilOpen)));
-        segments.add(new TTSSegment(GameConstants.SPEECH_LONG_PAUSE));
+        segments.add(new TTSSegment(longPauseDuration));
 
         String[] evilClose = new String[] {
                 evilsString,
                 " close your eyes."
         };
         segments.add(new TTSSegment(String.join("", evilClose)));
-        segments.add(new TTSSegment(GameConstants.SPEECH_SHORT_PAUSE));
+        segments.add(new TTSSegment(shortPauseDuration));
 
         if (percival) {
             List<String> percivalSees = new ArrayList<>();
@@ -171,7 +197,7 @@ public class GameInstance implements Serializable {
                     ". If you do not, slam the table."
             };
             segments.add(new TTSSegment(String.join("", percivalOpen)));
-            segments.add(new TTSSegment(GameConstants.SPEECH_LONG_PAUSE));
+            segments.add(new TTSSegment(longPauseDuration));
 
             String[] percivalClose = new String[] {
                     " Percival, close your eyes. ",
@@ -181,7 +207,7 @@ public class GameInstance implements Serializable {
                     " down. "
             };
             segments.add(new TTSSegment(String.join("", percivalClose)));
-            segments.add(new TTSSegment(GameConstants.SPEECH_SHORT_PAUSE));
+            segments.add(new TTSSegment(shortPauseDuration));
         }
 
         if (merlin) {
@@ -206,7 +232,7 @@ public class GameInstance implements Serializable {
                     ". If you do not, slam the table. "
             };
             segments.add(new TTSSegment(String.join("", merlinOpen)));
-            segments.add(new TTSSegment(GameConstants.SPEECH_LONG_PAUSE));
+            segments.add(new TTSSegment(longPauseDuration));
 
             String[] merlinClose = new String[] {
                     " Merlin, close your eyes. ",
@@ -216,7 +242,7 @@ public class GameInstance implements Serializable {
                     " down. "
             };
             segments.add(new TTSSegment(String.join("", merlinClose)));
-            segments.add(new TTSSegment(GameConstants.SPEECH_SHORT_PAUSE));
+            segments.add(new TTSSegment(shortPauseDuration));
         }
 
         segments.add(new TTSSegment("Everybody, put your fists away and open your eyes."));

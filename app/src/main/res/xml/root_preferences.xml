@@ -1,0 +1,45 @@
+<androidx.preference.PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory app:title="@string/settings.setup_header">
+
+        <ListPreference
+            app:key="voice"
+            app:defaultValue="@string/settings.voice_robot_id"
+            app:title="@string/settings.voice_title"
+            app:entries="@array/voice_entries"
+            app:entryValues="@array/voice_values"
+            app:useSimpleSummaryProvider="true"/>
+
+        <EditTextPreference
+            app:key="@string/settings.voice_long_pause_duration_id"
+            app:defaultValue="5"
+            app:title="@string/settings.voice_long_pause_duration"
+            app:useSimpleSummaryProvider="true"/>
+
+        <EditTextPreference
+            app:key="@string/settings.voice_short_pause_duration_id"
+            app:defaultValue="2"
+            app:title="@string/settings.voice_short_pause_duration"
+            app:useSimpleSummaryProvider="true"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/settings.gameplay_header">
+
+        <ListPreference
+            app:key="timer"
+            app:defaultValue="@string/settings.timer_full_id"
+            app:title="@string/settings.timer_title"
+            app:entries="@array/timer_entries"
+            app:entryValues="@array/timer_values"
+            app:useSimpleSummaryProvider="true"/>
+
+        <EditTextPreference
+            app:key="@string/settings.king_only_duration_id"
+            app:defaultValue="30"
+            app:title="@string/settings.king_only_duration"
+            app:useSimpleSummaryProvider="true"/>
+
+    </PreferenceCategory>
+
+</androidx.preference.PreferenceScreen>

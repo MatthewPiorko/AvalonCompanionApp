@@ -1,11 +1,14 @@
 package com.example.matt.avaloncompanionapp;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.speech.tts.UtteranceProgressListener;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceManager;
+
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -31,50 +34,54 @@ public class CharacterSelect extends AppCompatActivity {
 
         mediaPlayer = MediaPlayer.create(this, R.raw.night_human);
 
-        Button nightPhaseBot = findViewById(R.id.night_phase_bot);
-        Button nightPhaseHuman = findViewById(R.id.night_phase_human);
+        Resources resources = getResources();
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+        String voice = settings.getString("voice", "");
+
+        Button nightPhase = findViewById(R.id.night_phase);
         Button startGame = findViewById(R.id.start_game);
 
-        nightPhaseBot.setOnClickListener(view -> {
-            if (nightPhaseBot.getText().toString().equals(getResources().getString(R.string.tts_stop))) {
-                startGame.setEnabled(true);
-                nightPhaseHuman.setEnabled(true);
-                nightPhaseBot.setText(R.string.character_select_night_phase_bot);
-                ttsManager.flushQueue();
-            } else {
-                GameInstance gameInstance = createGameInstance();
-                ttsManager.addSegmentsToQueue(gameInstance.createNightPhaseSpeech());
-                nightPhaseBot.setText(R.string.tts_stop);
-                startGame.setEnabled(false);
-                nightPhaseHuman.setEnabled(false);
+        nightPhase.setOnClickListener(view -> {
+            Boolean isRobot = voice.equals(resources.getString(R.string.settings_voice_robot_id));
+            Boolean isHuman = voice.equals(resources.getString(R.string.settings_voice_human_id));
 
-                ttsManager.setUtteranceProgressListener(createUtteranceListener());
-            }
-        });
-
-        nightPhaseHuman.setOnClickListener(view -> {
-            if (nightPhaseHuman.getText().toString().equals(getResources().getString(R.string.tts_stop))) {
+            if (nightPhase.getText().toString().equals(getResources().getString(R.string.tts_stop))) {
                 startGame.setEnabled(true);
-                nightPhaseBot.setEnabled(true);
-                nightPhaseHuman.setText(R.string.character_select_night_phase_human);
-                mediaPlayer.stop();
-                try {
-                    mediaPlayer.prepare();
-                } catch (IOException e) {
-                    Log.e("error", "Could not play file");
+                nightPhase.setText(R.string.character_select_night_phase);
+                if (isRobot) {
+                    ttsManager.flushQueue();
+                } else if (isHuman) {
+                    mediaPlayer.stop();
+
+                    try {
+                        mediaPlayer.prepare();
+                    } catch (IOException e) {
+                        Log.e("error", "Could not play file");
+                    }
                 }
             } else {
-                mediaPlayer.start();
+                nightPhase.setText(R.string.tts_stop);
                 startGame.setEnabled(false);
-                nightPhaseBot.setEnabled(false);
-                nightPhaseHuman.setText(R.string.tts_stop);
+
+                if (isRobot) {
+                    GameInstance gameInstance = createGameInstance(settings, resources);
+                    long longPauseDuration = Long.valueOf(settings.getString(resources.getString(R.string.settings_voice_long_pause_duration_id),
+                            "5")) * GameConstants.MILLIS_IN_SECOND;
+                    long shortPauseDuration = Long.valueOf(settings.getString(resources.getString(R.string.settings_voice_short_pause_duration_id),
+                            "2")) * GameConstants.MILLIS_IN_SECOND;
+
+                    ttsManager.addSegmentsToQueue(gameInstance.createNightPhaseSpeech(longPauseDuration, shortPauseDuration));
+                    ttsManager.setUtteranceProgressListener(createUtteranceListener());
+                } else if (isHuman) {
+                    mediaPlayer.start();
+                }
             }
         });
 
         startGame.setOnClickListener(view -> {
             Intent intent = new Intent(CharacterSelect.this, Game.class);
 
-            intent.putExtra(GameConstants.INSTANCE_KEY, createGameInstance());
+            intent.putExtra(GameConstants.TTS_INSTANCE_KEY, createGameInstance(settings, resources));
             startActivity(intent);
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         });
@@ -98,8 +105,7 @@ public class CharacterSelect extends AppCompatActivity {
     }
 
     private UtteranceProgressListener createUtteranceListener() {
-        Button nightPhaseBot = findViewById(R.id.night_phase_bot);
-        Button nightPhaseHuman = findViewById(R.id.night_phase_human);
+        Button nightPhase = findViewById(R.id.night_phase);
         Button startGame = findViewById(R.id.start_game);
 
         return new UtteranceProgressListener() {
@@ -108,11 +114,10 @@ public class CharacterSelect extends AppCompatActivity {
 
             @Override
             public void onDone(String s) {
-                if (s != null && s.equals(GameConstants.UTTERANCE_FINISHED)) {
+                if (s != null && s.equals(GameConstants.TTS_UTTERANCE_FINISHED)) {
                     runOnUiThread(() -> {
                         startGame.setEnabled(true);
-                        nightPhaseBot.setText(getResources().getString(R.string.character_select_night_phase_bot));
-                        nightPhaseHuman.setText(getResources().getString(R.string.character_select_night_phase_human));
+                        nightPhase.setText(getResources().getString(R.string.character_select_night_phase));
                     });
                 }
             }
@@ -121,7 +126,7 @@ public class CharacterSelect extends AppCompatActivity {
         };
     }
 
-    private GameInstance createGameInstance() {
+    private GameInstance createGameInstance(SharedPreferences settings, Resources resources) {
         ToggleButton merlin = findViewById(R.id.merlin);
         ToggleButton percival = findViewById(R.id.percival);
         ToggleButton assassin = findViewById(R.id.assassin);
@@ -132,14 +137,18 @@ public class CharacterSelect extends AppCompatActivity {
         RadioGroup playerSelector = findViewById(R.id.num_players);
         ToggleButton numPlayersButton = findViewById(playerSelector.getCheckedRadioButtonId());
 
+        String timer = settings.getString("timer", "unknown");
+
         return new GameInstance(
+                resources,
                 Integer.valueOf(numPlayersButton.getTextOn().toString()),
                 merlin.isChecked(),
                 percival.isChecked(),
                 assassin.isChecked(),
                 morgana.isChecked(),
                 mordred.isChecked(),
-                oberon.isChecked()
+                oberon.isChecked(),
+                timer
         );
     }
 }

@@ -4,14 +4,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class GameConstants {
-    //TODO make these values configurable
-    public static long SPEECH_SHORT_PAUSE = 2 * 1000;
-    public static long SPEECH_LONG_PAUSE = 7 * 1000;
-    public static long KING_ONLY_TIME = 30 * 1000;
-    public static long TIME_PER_PLAYER = 60 * 1000;
+    public static long MILLIS_IN_SECOND = 1000;
+    public static long MILLIS_IN_MINUTE = 60 * MILLIS_IN_SECOND;
 
-    public static String INSTANCE_KEY = "GameInstance";
-    public static String UTTERANCE_FINISHED = "DONE";
+    public static String TTS_INSTANCE_KEY = "GameInstance";
+    public static String TTS_UTTERANCE_FINISHED = "DONE";
 
     private static final GameSetup fivePlayerGame = new GameSetup(5, 3, 2,
             new int[] {2,3,2,3,3});

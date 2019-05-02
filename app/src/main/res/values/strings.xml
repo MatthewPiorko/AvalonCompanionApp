@@ -15,8 +15,33 @@
     <string name="character_select.morgana">Morgana</string>
     <string name="character_select.mordred">Mordred</string>
     <string name="character_select.oberon">Oberon</string>
-    <string name="character_select.night_phase_bot">Night\n(Bot)</string>
-    <string name="character_select.night_phase_human">Night\n(Human)</string>
+    <string name="character_select.night_phase">Night Phase</string>
     <string name="character_select.start">Start</string>
+    <string name="title_activity_settings">Settings</string>
+
+    <!-- Settings -->
+    <string name="settings.setup_header">Game Setup</string>
+    <string name="settings.voice_title">Night Phase Voice</string>
+    <string name="settings.voice_robot">Robot</string>
+    <string name="settings.voice_robot_id">robot</string>
+    <string name="settings.voice_human">Human</string>
+    <string name="settings.voice_human_id">Human</string>
+    <string name="settings.voice_long_pause_duration">Long Pause Duration (Seconds)</string>
+    <string name="settings.voice_long_pause_duration_id">long_pause_id</string>
+    <string name="settings.voice_short_pause_duration">Short Pause Duration (Seconds)</string>
+    <string name="settings.voice_short_pause_duration_id">short_pause_id</string>
+
+    <string name="settings.gameplay_header">Gameplay</string>
+    <string name="settings.timer_title">Timer Length</string>
+    <string name="settings.timer_full">Full Timers</string>
+    <string name="settings.timer_full_id">full</string>
+    <string name="settings.timer_half">Half Timers</string>
+    <string name="settings.timer_half_id">half</string>
+    <string name="settings.timers_minus_one">Timers Minus One Minute</string>
+    <string name="settings.timers_minus_one_id">minus_one</string>
+    <string name="settings.timers_ten_second">Ten Second Timers</string>
+    <string name="settings.timers_ten_second_id">ten_second</string>
+    <string name="settings.king_only_duration">King Only Duration (Seconds)</string>
+    <string name="settings.king_only_duration_id">king_only_duration</string>
 
 </resources>

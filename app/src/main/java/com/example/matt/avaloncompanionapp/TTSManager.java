@@ -3,7 +3,6 @@ package com.example.matt.avaloncompanionapp;
 import android.content.Context;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.UtteranceProgressListener;
-import android.speech.tts.Voice;
 import android.util.Log;
 
 import com.example.matt.avaloncompanionapp.TTSSegment.TTSSegment_Type;
@@ -75,7 +74,7 @@ public class TTSManager {
 
     private void speak(String text, int type, boolean finished) {
         if (isLoaded) {
-            mTts.speak(text, type, null, finished ? GameConstants.UTTERANCE_FINISHED : null);
+            mTts.speak(text, type, null, finished ? GameConstants.TTS_UTTERANCE_FINISHED : null);
         } else {
             Log.e("error", "TTS Not Initialized");
         }
@@ -83,7 +82,7 @@ public class TTSManager {
 
     private void pause(long duration, int type, boolean finished) {
         if (isLoaded) {
-            mTts.playSilentUtterance(duration, type, finished ? GameConstants.UTTERANCE_FINISHED : null);
+            mTts.playSilentUtterance(duration, type, finished ? GameConstants.TTS_UTTERANCE_FINISHED : null);
         } else {
             Log.e("error", "TTS Not Initialized");
         }
