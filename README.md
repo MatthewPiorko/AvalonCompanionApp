@@ -1,6 +1,6 @@
 # Avalon Companion App
 
-This is a companion app I built for the Avalon board game. It is used to keep track of time per round. It is usable on any Android operating system (8.0 and above).
+This is a companion app I built for the Avalon board game. Our group would discuss endlessly, making the game take far longer than intended, so we implemented a timer system to keep the game moving. The app is used to keep track of the time for discussion each round. It is usable on any Android operating system (8.1 and above).
 
 ## How to Install
 
@@ -10,7 +10,7 @@ To recompile from source, download Android Studio and open the project. Then, fo
 
 ## How to Use
 
-The Game Setup screen allows the user to indicate the number of players and which roles are in the game. This screen is mainly used to do the night phase.
+The Game Setup screen allows the user to indicate the number of players and which roles are in the game. This screen is mainly used to do the night phase. 
 
 During the main phase of the game, my group uses a set of timers. The way these timers work is as follows: 
 * Public discussion lasting a number of minutes equal to the number of people on the mission, 

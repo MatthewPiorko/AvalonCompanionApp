@@ -66,9 +66,9 @@ public class CharacterSelect extends AppCompatActivity {
                 if (isRobot) {
                     GameInstance gameInstance = createGameInstance(settings, resources);
                     long longPauseDuration = Long.valueOf(settings.getString(resources.getString(R.string.settings_voice_long_pause_duration_id),
-                            "5")) * GameConstants.MILLIS_IN_SECOND;
+                            String.valueOf(resources.getInteger(R.integer.default_long_pause_duration)))) * GameConstants.MILLIS_IN_SECOND;
                     long shortPauseDuration = Long.valueOf(settings.getString(resources.getString(R.string.settings_voice_short_pause_duration_id),
-                            "2")) * GameConstants.MILLIS_IN_SECOND;
+                            String.valueOf(resources.getInteger(R.integer.default_short_pause_duration)))) * GameConstants.MILLIS_IN_SECOND;
 
                     ttsManager.addSegmentsToQueue(gameInstance.createNightPhaseSpeech(longPauseDuration, shortPauseDuration));
                     ttsManager.setUtteranceProgressListener(createUtteranceListener());
@@ -129,6 +129,7 @@ public class CharacterSelect extends AppCompatActivity {
     private GameInstance createGameInstance(SharedPreferences settings, Resources resources) {
         ToggleButton merlin = findViewById(R.id.merlin);
         ToggleButton percival = findViewById(R.id.percival);
+        ToggleButton lovers = findViewById(R.id.lovers);
         ToggleButton assassin = findViewById(R.id.assassin);
         ToggleButton morgana = findViewById(R.id.morgana);
         ToggleButton mordred = findViewById(R.id.mordred);
@@ -137,13 +138,14 @@ public class CharacterSelect extends AppCompatActivity {
         RadioGroup playerSelector = findViewById(R.id.num_players);
         ToggleButton numPlayersButton = findViewById(playerSelector.getCheckedRadioButtonId());
 
-        String timer = settings.getString("timer", "unknown");
+        String timer = settings.getString("timer", resources.getString(R.string.settings_timer_full_id));
 
         return new GameInstance(
                 resources,
                 Integer.valueOf(numPlayersButton.getTextOn().toString()),
                 merlin.isChecked(),
                 percival.isChecked(),
+                lovers.isChecked(),
                 assassin.isChecked(),
                 morgana.isChecked(),
                 mordred.isChecked(),

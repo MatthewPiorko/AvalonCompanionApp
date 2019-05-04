@@ -1,4 +1,4 @@
-<androidx.preference.PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+<androidx.preference.PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceCategory app:title="@string/settings.setup_header">
 
@@ -12,13 +12,13 @@
 
         <EditTextPreference
             app:key="@string/settings.voice_long_pause_duration_id"
-            app:defaultValue="5"
+            app:defaultValue="@integer/default_long_pause_duration"
             app:title="@string/settings.voice_long_pause_duration"
             app:useSimpleSummaryProvider="true"/>
 
         <EditTextPreference
             app:key="@string/settings.voice_short_pause_duration_id"
-            app:defaultValue="2"
+            app:defaultValue="@integer/default_short_pause_duration"
             app:title="@string/settings.voice_short_pause_duration"
             app:useSimpleSummaryProvider="true"/>
 
@@ -36,7 +36,7 @@
 
         <EditTextPreference
             app:key="@string/settings.king_only_duration_id"
-            app:defaultValue="30"
+            app:defaultValue="@integer/default_king_duration"
             app:title="@string/settings.king_only_duration"
             app:useSimpleSummaryProvider="true"/>
 

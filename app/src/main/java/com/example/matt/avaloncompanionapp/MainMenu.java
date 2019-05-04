@@ -22,6 +22,8 @@ public class MainMenu extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar == null) {
             Log.e("error", "Could not find action bar");
+        } else {
+            actionBar.hide();
         }
 
         Button startGame = findViewById(R.id.start_game);
@@ -32,7 +34,7 @@ public class MainMenu extends AppCompatActivity {
 
         Button settings = findViewById(R.id.settings);
         settings.setOnClickListener(view -> {
-            startActivity(new Intent(MainMenu.this, SettingsActivity.class));
+            startActivity(new Intent(MainMenu.this, Settings.class));
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         });
     }

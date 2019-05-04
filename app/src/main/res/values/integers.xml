@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <integer name="sliding_animation_duration">600</integer>
+    <integer name="default_long_pause_duration">5</integer>
+    <integer name="default_short_pause_duration">2</integer>
+    <integer name="default_king_duration">30</integer>
 </resources>

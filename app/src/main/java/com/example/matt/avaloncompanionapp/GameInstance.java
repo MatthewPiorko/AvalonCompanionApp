@@ -19,6 +19,7 @@ public class GameInstance implements Serializable {
 
     private final Boolean merlin;
     private final Boolean percival;
+    private final Boolean lovers;
     private final int numGood;
     private final int numNeutralGood;
 
@@ -33,7 +34,7 @@ public class GameInstance implements Serializable {
     private final long[] timePerMission;
     private final boolean fourthRoundTwoFails;
 
-    public GameInstance(Resources resources, int numPlayers, Boolean merlin, Boolean percival,
+    public GameInstance(Resources resources, int numPlayers, Boolean merlin, Boolean percival, Boolean lovers,
                         Boolean assassin, Boolean morgana, Boolean mordred, Boolean oberon,
                         String timerId) {
         this.numPlayers = numPlayers;
@@ -41,6 +42,7 @@ public class GameInstance implements Serializable {
 
         this.merlin = merlin;
         this.percival = percival;
+        this.lovers = lovers;
 
         this.assassin = assassin;
         this.morgana = morgana;
@@ -49,7 +51,7 @@ public class GameInstance implements Serializable {
 
         GameSetup gameSetup = GameConstants.playersToGameSetup.get(numPlayers);
         this.numGood = gameSetup.goodPlayers;
-        this.numNeutralGood = this.numGood - boolToInt(merlin) - boolToInt(percival);
+        this.numNeutralGood = this.numGood - boolToInt(merlin) - boolToInt(percival) - (boolToInt(lovers) * 2);
         this.numEvil = gameSetup.evilPlayers;
         this.numNeutralEvil = this.numEvil - boolToInt(assassin) - boolToInt(morgana) - boolToInt(mordred) - boolToInt(oberon);
         this.playersPerMission = gameSetup.playersPerMission;
@@ -104,6 +106,10 @@ public class GameInstance implements Serializable {
 
     public Boolean hasPercival() {
         return percival;
+    }
+
+    public Boolean hasLovers() {
+        return lovers;
     }
 
     public Boolean hasAssassin() {
@@ -179,6 +185,16 @@ public class GameInstance implements Serializable {
         };
         segments.add(new TTSSegment(String.join("", evilClose)));
         segments.add(new TTSSegment(shortPauseDuration));
+
+        if (lovers) {
+            String loversOpen = "The lovers, open your eyes. You should see one other player. If you do not, slam the table.";
+            segments.add(new TTSSegment(loversOpen));
+            segments.add(new TTSSegment(longPauseDuration));
+
+            String loversClose = "The lovers, close your eyes.";
+            segments.add(new TTSSegment(loversClose));
+            segments.add(new TTSSegment(shortPauseDuration));
+        }
 
         if (percival) {
             List<String> percivalSees = new ArrayList<>();
