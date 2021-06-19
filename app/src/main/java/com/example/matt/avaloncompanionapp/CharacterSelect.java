@@ -65,9 +65,9 @@ public class CharacterSelect extends AppCompatActivity {
 
                 if (isRobot) {
                     GameInstance gameInstance = createGameInstance(settings, resources);
-                    long longPauseDuration = Long.valueOf(settings.getString(resources.getString(R.string.settings_voice_long_pause_duration_id),
+                    long longPauseDuration = Long.parseLong(settings.getString(resources.getString(R.string.settings_voice_long_pause_duration_id),
                             String.valueOf(resources.getInteger(R.integer.default_long_pause_duration)))) * GameConstants.MILLIS_IN_SECOND;
-                    long shortPauseDuration = Long.valueOf(settings.getString(resources.getString(R.string.settings_voice_short_pause_duration_id),
+                    long shortPauseDuration = Long.parseLong(settings.getString(resources.getString(R.string.settings_voice_short_pause_duration_id),
                             String.valueOf(resources.getInteger(R.integer.default_short_pause_duration)))) * GameConstants.MILLIS_IN_SECOND;
 
                     ttsManager.addSegmentsToQueue(gameInstance.createNightPhaseSpeech(longPauseDuration, shortPauseDuration));
@@ -142,7 +142,7 @@ public class CharacterSelect extends AppCompatActivity {
 
         return new GameInstance(
                 resources,
-                Integer.valueOf(numPlayersButton.getTextOn().toString()),
+                Integer.parseInt(numPlayersButton.getTextOn().toString()),
                 merlin.isChecked(),
                 percival.isChecked(),
                 lovers.isChecked(),

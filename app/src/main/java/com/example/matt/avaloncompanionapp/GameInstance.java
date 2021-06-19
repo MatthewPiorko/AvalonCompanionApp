@@ -155,8 +155,24 @@ public class GameInstance implements Serializable {
     public List<TTSSegment> createNightPhaseSpeech(long longPauseDuration, long shortPauseDuration) {
         List<TTSSegment> segments = new ArrayList<>();
 
-        segments.add(new TTSSegment("Everybody, close your eyes and put your fist out. "));
+        segments.add(new TTSSegment("Everyone, close your eyes and put out your fist. "));
         segments.add(new TTSSegment(longPauseDuration));
+
+        segments.addAll(createEvilSegments(shortPauseDuration, longPauseDuration));
+
+        if (merlin) segments.addAll(createMerlinSegments(shortPauseDuration, longPauseDuration));
+
+        if (percival) segments.addAll(createPercivalSegments(shortPauseDuration, longPauseDuration));
+
+        if (lovers) segments.addAll(createLoversSegments(shortPauseDuration, longPauseDuration));
+
+        segments.add(new TTSSegment("Everybody, put your fists away and open your eyes."));
+
+        return segments;
+    }
+
+    private List<TTSSegment> createEvilSegments(long shortPauseDuration, long longPauseDuration) {
+        List<TTSSegment> segments = new ArrayList<>();
 
         List<String> evils = new ArrayList<>();
         if (assassin) evils.add("Assassin");
@@ -186,82 +202,92 @@ public class GameInstance implements Serializable {
         segments.add(new TTSSegment(String.join("", evilClose)));
         segments.add(new TTSSegment(shortPauseDuration));
 
-        if (lovers) {
-            String loversOpen = "The lovers, open your eyes. You should see one other player. If you do not, slam the table.";
-            segments.add(new TTSSegment(loversOpen));
-            segments.add(new TTSSegment(longPauseDuration));
+        return segments;
+    }
 
-            String loversClose = "The lovers, close your eyes.";
-            segments.add(new TTSSegment(loversClose));
-            segments.add(new TTSSegment(shortPauseDuration));
-        }
+    private List<TTSSegment> createLoversSegments(long shortPauseDuration, long longPauseDuration) {
+        List<TTSSegment> segments = new ArrayList<>();
 
-        if (percival) {
-            List<String> percivalSees = new ArrayList<>();
-            if (merlin) percivalSees.add("Merlin");
-            if (morgana) percivalSees.add("Morgana");
-            String percivalSeesString = stringifyCharacterList(percivalSees);
-            String thumbString = percivalSees.size() == 1 ? "thumb" : "thumbs";
+        String loversOpen = "The lovers, open your eyes. You should see one other player. If you do not, slam the table.";
+        segments.add(new TTSSegment(loversOpen));
+        segments.add(new TTSSegment(longPauseDuration));
 
-            String[] percivalOpen = new String[] {
-                    percivalSeesString,
-                    " put your ",
-                    thumbString,
-                    " up. Percival, open your eyes. You should see ",
-                    percivalSees.size() > 1 ? " two " : " one ",
-                    thumbString,
-                    ". If you do not, slam the table."
-            };
-            segments.add(new TTSSegment(String.join("", percivalOpen)));
-            segments.add(new TTSSegment(longPauseDuration));
+        String loversClose = "The lovers, close your eyes.";
+        segments.add(new TTSSegment(loversClose));
+        segments.add(new TTSSegment(shortPauseDuration));
 
-            String[] percivalClose = new String[] {
-                    " Percival, close your eyes. ",
-                    percivalSeesString,
-                    " put your ",
-                    thumbString,
-                    " down. "
-            };
-            segments.add(new TTSSegment(String.join("", percivalClose)));
-            segments.add(new TTSSegment(shortPauseDuration));
-        }
+        return segments;
+    }
 
-        if (merlin) {
-            List<String> merlinSees = new ArrayList<>();
-            if (assassin) merlinSees.add("Assassin");
-            if (morgana) merlinSees.add("Morgana");
-            if (oberon) merlinSees.add("Oberon");
+    private List<TTSSegment> createMerlinSegments(long shortPauseDuration, long longPauseDuration) {
+        List<TTSSegment> segments = new ArrayList<>();
 
-            if (numNeutralEvil == 1) merlinSees.add("neutral evil");
-            else if (numNeutralEvil > 1) merlinSees.add(numNeutralEvil + " neutral evils");
+        List<String> merlinSees = new ArrayList<>();
+        if (assassin) merlinSees.add("Assassin");
+        if (morgana) merlinSees.add("Morgana");
+        if (oberon) merlinSees.add("Oberon");
 
-            String merlinSeesString = stringifyCharacterList(merlinSees);
-            String thumbString = merlinSees.size() == 1 ? "thumb" : "thumbs";
+        if (numNeutralEvil == 1) merlinSees.add("neutral evil");
+        else if (numNeutralEvil > 1) merlinSees.add(numNeutralEvil + " neutral evils");
 
-            String[] merlinOpen = new String[] {
-                    merlinSeesString,
-                    " put your ",
-                    thumbString,
-                    " up. Merlin, open your eyes. You should see ",
-                    String.valueOf(mordred ? numEvil - 1 : numEvil),
-                    thumbString,
-                    ". If you do not, slam the table. "
-            };
-            segments.add(new TTSSegment(String.join("", merlinOpen)));
-            segments.add(new TTSSegment(longPauseDuration));
+        String merlinSeesString = stringifyCharacterList(merlinSees);
+        String thumbString = merlinSees.size() == 1 ? "thumb" : "thumbs";
 
-            String[] merlinClose = new String[] {
-                    " Merlin, close your eyes. ",
-                    merlinSeesString,
-                    " put your ",
-                    thumbString,
-                    " down. "
-            };
-            segments.add(new TTSSegment(String.join("", merlinClose)));
-            segments.add(new TTSSegment(shortPauseDuration));
-        }
+        String[] merlinOpen = new String[] {
+                merlinSeesString,
+                " put your ",
+                thumbString,
+                " up. Merlin, open your eyes. You should see ",
+                String.valueOf(mordred ? numEvil - 1 : numEvil),
+                thumbString,
+                ". If you do not, slam the table. "
+        };
+        segments.add(new TTSSegment(String.join("", merlinOpen)));
+        segments.add(new TTSSegment(longPauseDuration));
 
-        segments.add(new TTSSegment("Everybody, put your fists away and open your eyes."));
+        String[] merlinClose = new String[] {
+                " Merlin, close your eyes. ",
+                merlinSeesString,
+                " put your ",
+                thumbString,
+                " down. "
+        };
+        segments.add(new TTSSegment(String.join("", merlinClose)));
+        segments.add(new TTSSegment(shortPauseDuration));
+
+        return segments;
+    }
+
+    private List<TTSSegment> createPercivalSegments(long shortPauseDuration, long longPauseDuration) {
+        List<TTSSegment> segments = new ArrayList<>();
+
+        List<String> percivalSees = new ArrayList<>();
+        if (merlin) percivalSees.add("Merlin");
+        if (morgana) percivalSees.add("Morgana");
+        String percivalSeesString = stringifyCharacterList(percivalSees);
+        String thumbString = percivalSees.size() == 1 ? "thumb" : "thumbs";
+
+        String[] percivalOpen = new String[] {
+                percivalSeesString,
+                " put your ",
+                thumbString,
+                " up. Percival, open your eyes. You should see ",
+                percivalSees.size() > 1 ? " two " : " one ",
+                thumbString,
+                ". If you do not, slam the table."
+        };
+        segments.add(new TTSSegment(String.join("", percivalOpen)));
+        segments.add(new TTSSegment(longPauseDuration));
+
+        String[] percivalClose = new String[] {
+                " Percival, close your eyes. ",
+                percivalSeesString,
+                " put your ",
+                thumbString,
+                " down. "
+        };
+        segments.add(new TTSSegment(String.join("", percivalClose)));
+        segments.add(new TTSSegment(shortPauseDuration));
 
         return segments;
     }

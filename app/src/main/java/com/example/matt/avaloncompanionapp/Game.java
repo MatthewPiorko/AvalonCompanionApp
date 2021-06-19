@@ -39,7 +39,7 @@ public class Game extends AppCompatActivity {
 
         String value = settings.getString(resources.getString(R.string.settings_king_only_duration_id),
                 String.valueOf(resources.getInteger(R.integer.default_king_duration)));
-        long kingOnlyTime = Long.valueOf(value) * GameConstants.MILLIS_IN_SECOND;
+        long kingOnlyTime = Long.parseLong(value) * GameConstants.MILLIS_IN_SECOND;
 
         ttsManager = new TTSManager();
         ttsManager.init(this);

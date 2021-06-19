@@ -1,12 +1,9 @@
 package com.example.matt.avaloncompanionapp;
-
 import android.content.Context;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.UtteranceProgressListener;
 import android.util.Log;
-
 import com.example.matt.avaloncompanionapp.TTSSegment.TTSSegment_Type;
-
 import java.util.List;
 import java.util.Locale;
 
@@ -20,7 +17,7 @@ public class TTSManager {
 
     public void init(Context context) {
         try {
-            mTts = new TextToSpeech(context, onInitListener);
+            mTts = new TextToSpeech(context, onInitListener, "com.google.android.tts");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -37,7 +34,7 @@ public class TTSManager {
                     Log.e("error", "This Language is not supported");
                 }
 
-                mTts.setSpeechRate(.9f);
+                mTts.setSpeechRate(.8f);
             } else {
                 Log.e("error", "Initialization Failed!");
             }
